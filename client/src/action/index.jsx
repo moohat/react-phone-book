@@ -9,21 +9,22 @@ const request = axios.create({
 
 
 // start load ItemList from database
-
-export const loadItemDataSuccess = (phonebooks) => ({
+// nge fatch data ke redux
+const loadItemDataSuccess = (phonebooks) => ({
   type: 'LOAD_ITEM_SUCCESS',
   phonebooks
 })
   
-  export const loadItemDataFailure = () => ({
+  const loadItemDataFailure = () => ({
     type: 'LOAD_ITEM_FAILURE'
   })
 
   
-  // end load item data
-  
+  // end load item data  
   export const LoadItem = () => {
+    //call back
     return dispatch => {
+      //axios
       return request.get('phonebooks')
       .then(response => {
         console.log('result dari >', response.data)
@@ -39,24 +40,25 @@ export const loadItemDataSuccess = (phonebooks) => ({
   // start post data
  const postDataSuccess = (phonebooks) => ({
     type: 'POST_STORE_SUCCESS',
-    phonebooks
+    phonebooks // karena ini object ini sama aj dengan phonebooks:phonebooks
   })
 
-  export const postDataFailure = (idUser) => ({
+  const postDataFailure = (idUser) => ({
     type: 'POST_STORE_FAILURE',
     idUser
   })
 
-  export const postDataRedux = (idUser, name, phone) => ({
+   const postDataRedux = (idUser, name, phone) => ({
     type:'POST_STORE',
     idUser, name, phone
   })
 
   export const postStore = (name, phone) => {
     let idUser = Date.now()
-    
+    //call back
     return dispatch => {
       dispatch(postDataRedux(idUser, name, phone))
+      //axios
       return request.post('phonebooks', {idUser, name, phone})
       .then(result => {
         console.log('this result data post > ', result.data);
@@ -76,12 +78,12 @@ export const loadItemDataSuccess = (phonebooks) => ({
     idUser
   })
 
-  export const deleteStoreSuccess = (store) => ({
+   const deleteStoreSuccess = (store) => ({
     type: 'DELETE_STORE_SUCCESS',
     store
   })
 
-  export const deleteStoreFailure = () => ({
+   const deleteStoreFailure = () => ({
     type: 'DELETE_STORE_FAILURE'
   })
 

@@ -87,7 +87,7 @@ class ItemList extends Component {
                 {!this.state.editButton && (
                     <>
                         <td>{name}</td>
-                        <td>{phone}</td>
+                        <td>{phone}</td>  
                         <td>
                             <button type="submit" class="btn btn-success mb-2" onClick={this.handleEditOn}>Edit</button>
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { postStore } from '../action/index'
+import { postStore } from '../action'
 // import Swal from 'sweetalert2'
 
 class AddPhonebook extends Component {

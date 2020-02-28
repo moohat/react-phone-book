@@ -4,7 +4,7 @@ const store = (state = [], action) => {
 
     case 'LOAD_ITEM_SUCCESS':
     return action.phonebooks.map((item)=>{
-      item.sent = true;
+      item.sent = true; // biar bisa tau data terkirim atau tidak
       return item
     })
 

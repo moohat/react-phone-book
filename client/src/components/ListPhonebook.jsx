@@ -129,6 +129,7 @@ class ListPhonebook extends Component {
                     idUser={item.idUser}
                     name={item.name}
                     phone={item.phone}
+                    sent={item.sent}
                 />
             )
         })
@@ -160,7 +161,7 @@ class ListPhonebook extends Component {
 const mapStateToProps = (state) => ({
     phonebooks: state.store
 })
-
+// data dari folder action/index.jsx  export const LoadItem
 const mapDispatchToProps = (dispatch) => ({
     LoadItem: () => dispatch(LoadItem())
 })
