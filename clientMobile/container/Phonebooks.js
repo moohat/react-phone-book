@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, FlatList, SafeAreaView } from 'react-native';
+import { Text, View, FlatList, SafeAreaView, YellowBox } from 'react-native';
 import {
     Container,
     Content,
@@ -11,7 +11,16 @@ import {
 import axios from 'axios';
 import { API_URL } from '../constants';
 import PhonebooksItem from '../components/PhonebooksItem';
+//avoid yellow error componentWillReceiveProps
+import _ from 'lodash';
 
+YellowBox.ignoreWarnings(['componentWillReceiveProps']);
+const _console = _.clone(console);
+console.warn = message => {
+    if (message.indexOf('componentWillReceiveProps') <= -1) {
+        _console.warn(message);
+    }
+};
 
 
 export default class Phonebooks extends Component {
@@ -25,7 +34,7 @@ export default class Phonebooks extends Component {
 
     componentDidMount() {
         const self = this;
-        axios.get(API_URL).then((result) => {
+        axios.get(`${API_URL}/phonebooks`).then((result) => {
             // console.log(result.data);
             self.setState({
                 users: result.data,
@@ -54,7 +63,10 @@ export default class Phonebooks extends Component {
                 <FlatList
                     data={this.state.users}
                     keyExtractor={this._keyExtractor}
-                    renderItem={({ item }) => <PhonebooksItem user={item} />}
+                    renderItem={({ item }) => <PhonebooksItem user={item} 
+                    // edit={() => this.props.navigation.navigate('PhonebookEdit', {item})}
+                    onPress={() => this.props.navigation.navigate('PhonebookEdit', {...item})}
+                    />}
                 />
 
                 <Fab

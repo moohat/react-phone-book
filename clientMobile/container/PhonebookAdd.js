@@ -11,6 +11,8 @@ import {
     Button,
     Icon
   } from 'native-base';
+import { API_URL } from '../constants';
+import axios from 'axios';
 //   import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class PhonebookAdd extends Component {
@@ -18,17 +20,37 @@ export default class PhonebookAdd extends Component {
     constructor(){
         super();
         this.state = {
-            userId: '',
+            idUser: Date.now(),
             name : '',
             phone: '',
         }
+    }
+
+    handleSubmit() {
+      const idUser = this.state.idUser;
+      const name = this.state.name;
+      const phone = this.state.phone;
+      const {goBack} = this.props.navigation;
+      if(name.length > 3 && phone.length == 12){  
+        axios
+          .post(`${API_URL}/phonebooks`, {
+            idUser: idUser,
+            name: name,
+            phone: phone,
+          })
+          .then(result => {
+            goBack();
+          });
+      }else{
+        alert('input tidak boleh boleh kosong, nama min 3 huruf, phone number harus 12 digit')
+      }
     }
     render() {
         return (
             <Container style ={{backgroundColor: '#FFF'}}>
             <Content>
               <Form>
-                <Item>
+                <Item >
                 <Icon active name='md-person' />
                   <Input 
                   placeholder='Name'
@@ -36,11 +58,12 @@ export default class PhonebookAdd extends Component {
                 </Item>
                 <Item>
             <Icon active name='md-phone-portrait' />
-            <Input placeholder='Icon Alignment in Textbox'/>
+            <Input placeholder='Phone' onChangeText={phone => this.setState({phone})} keyboardType={'numeric'}  />
           </Item>
               </Form>
             </Content>
-                <Button full primary  style={styles.btnFooter}>
+            
+                <Button full primary onPress={() => this.handleSubmit() } style={styles.btnFooter}>
                   <Text>Submit</Text>
                 </Button>
           </Container>
